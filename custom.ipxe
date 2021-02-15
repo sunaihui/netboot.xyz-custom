@@ -15,7 +15,7 @@ goto ${custom_choice}
 goto custom_exit
 
 :setup_alpine
-set base-url = http://dl-cdn.alpinelinux.org/alpine/v3.13
+set base-url http://dl-cdn.alpinelinux.org/alpine/v3.13
 imgfree
 kernel ${base-url}/releases/x86_64/netboot/vmlinuz-virt ${ipparam} alpine_repo=${base-url}/main/ modules=loop,squashfs modloop=${base-url}/releases/x86_64/netboot/modloop-virt loglevel=7 ${cmdline}
 initrd ${base-url}/releases/x86_64/netboot/initramfs-virt
