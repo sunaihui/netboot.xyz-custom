@@ -7,8 +7,8 @@ isset ${dhcp-server} && set ipparam ip=dhcp || set ipparam ip=${ip}::${gateway}:
 
 :custom
 clear custom_choice
-menu setup
-item setup_alpine ${space} setup Alpine Linux
+menu Setup_OS
+item setup_alpine ${space} Setup Alpine Linux
 choose custom_choice || goto custom_exit
 echo ${cls}
 goto ${custom_choice}
