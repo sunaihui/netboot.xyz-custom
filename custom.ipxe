@@ -7,7 +7,7 @@ isset ${dhcp-server} && set ipparam ip=dhcp || set ipparam ip=${ip}::${gateway}:
 
 :custom
 clear custom_choice
-menu Setup_OS
+menu Setup OS
 item setup_alpine ${space} setup Alpine Linux
 choose custom_choice || goto custom_exit
 echo ${cls}
@@ -15,9 +15,10 @@ goto ${custom_choice}
 goto custom_exit
 
 :setup_alpine
+set alpine-url http://dl-cdn.alpinelinux.org/alpine/v3.13
 imgfree
-kernel http://dl-cdn.alpinelinux.org/alpine/v3.13/releases/x86_64/netboot/vmlinuz-virt ${ipparam} alpine_repo=http://dl-cdn.alpinelinux.org/alpine/v3.13/main/ modules=loop,squashfs modloop=http://dl-cdn.alpinelinux.org/alpine/v3.13/releases/x86_64/netboot/modloop-virt loglevel=7 ${cmdline}
-initrd http://dl-cdn.alpinelinux.org/alpine/v3.13/releases/x86_64/netboot/initramfs-virt
+kernel ${alpine-url}/releases/x86_64/netboot/vmlinuz-virt ${ipparam} alpine_repo=${alpine-url}/main/ modules=loop,squashfs modloop=${alpine-url}/releases/x86_64/netboot/modloop-virt loglevel=7 ${cmdline}
+initrd ${alpine-url}/releases/x86_64/netboot/initramfs-virt
 echo
 echo MD5sums:
 md5sum vmlinuz-virt initramfs-virt
