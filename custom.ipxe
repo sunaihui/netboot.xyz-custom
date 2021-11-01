@@ -8,14 +8,47 @@ isset ${dhcp-server} && set ipparam ip=dhcp || set ipparam ip=${ip}::${gateway}:
 :custom
 clear custom_choice
 menu Setup OS
-item setup_alpine ${space} setup Alpine Linux
+item setup_alpine_lts ${space} setup Alpine Linux lts 3.14
+item setup_alpine_virt ${space} setup Alpine Linux virt 3.14
+item setup_alpine_lts_cn ${space} setup Alpine Linux lts 3.14(CN)
+item setup_alpine_virt_cn ${space} setup Alpine Linux virt 3.14(CN)
 choose custom_choice || goto custom_exit
 echo ${cls}
 goto ${custom_choice}
 goto custom_exit
 
-:setup_alpine
-set alpine-url http://dl-cdn.alpinelinux.org/alpine/v3.13
+:setup_alpine_lts
+set alpine-url http://dl-cdn.alpinelinux.org/alpine/v3.14
+imgfree
+kernel ${alpine-url}/releases/x86_64/netboot/vmlinuz-lts ${ipparam} alpine_repo=${alpine-url}/main/ modules=loop,squashfs modloop=${alpine-url}/releases/x86_64/netboot/modloop-lts loglevel=7 ${cmdline}
+initrd ${alpine-url}/releases/x86_64/netboot/initramfs-lts
+echo
+echo MD5sums:
+md5sum vmlinuz-virt initramfs-virt
+boot
+
+:setup_alpine_virt
+set alpine-url http://dl-cdn.alpinelinux.org/alpine/v3.14
+imgfree
+kernel ${alpine-url}/releases/x86_64/netboot/vmlinuz-virt ${ipparam} alpine_repo=${alpine-url}/main/ modules=loop,squashfs modloop=${alpine-url}/releases/x86_64/netboot/modloop-virt loglevel=7 ${cmdline}
+initrd ${alpine-url}/releases/x86_64/netboot/initramfs-virt
+echo
+echo MD5sums:
+md5sum vmlinuz-virt initramfs-virt
+boot
+
+:setup_alpine_lts_cn
+set alpine-url http://mirrors.nju.edu.cn/alpine/v3.14
+imgfree
+kernel ${alpine-url}/releases/x86_64/netboot/vmlinuz-lts ${ipparam} alpine_repo=${alpine-url}/main/ modules=loop,squashfs modloop=${alpine-url}/releases/x86_64/netboot/modloop-lts loglevel=7 ${cmdline}
+initrd ${alpine-url}/releases/x86_64/netboot/initramfs-lts
+echo
+echo MD5sums:
+md5sum vmlinuz-virt initramfs-virt
+boot
+
+:setup_alpine_virt_cn
+set alpine-url http://mirrors.nju.edu.cn/alpine/v3.14
 imgfree
 kernel ${alpine-url}/releases/x86_64/netboot/vmlinuz-virt ${ipparam} alpine_repo=${alpine-url}/main/ modules=loop,squashfs modloop=${alpine-url}/releases/x86_64/netboot/modloop-virt loglevel=7 ${cmdline}
 initrd ${alpine-url}/releases/x86_64/netboot/initramfs-virt
